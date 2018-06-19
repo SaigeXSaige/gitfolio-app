@@ -1,6 +1,5 @@
 require "graphql/client"
 require "graphql/client/http"
-require 'pry'
 
 # Star Wars API example wrapper
 module GitHub
@@ -8,7 +7,7 @@ module GitHub
   HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
     def headers(context)
       # Optionally set any HTTP headers
-      { "Authorization": "token 635cdc5a8b4453d38e96429754ddb8b01d8dc19d" }
+      { "Authorization": "token ad310c73e375065bd64c5a1f9e928a7780575c19" }
     end
   end  
 
