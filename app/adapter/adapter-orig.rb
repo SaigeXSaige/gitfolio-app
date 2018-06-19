@@ -1,10 +1,3 @@
-class RepositoryController < ApplicationController
-  def index
-  end
-
-  def create
-  end
-
 require "graphql/client"
 require "graphql/client/http"
 
@@ -76,6 +69,12 @@ end
 
 p mapped
 
+# data.each_with_object([]) do |value, result|
+#     # data = [node, node, node]
+#     binding.pry
+
+#     value.node.name
+# end
 
 
-end
+# '{ "query": "query { repositoryOwner(login: mostlyfocusedmike) { ... on User { pinnedRepositories(first:6) { edges { node { name } } } } } }" }'

@@ -1,14 +1,13 @@
 require "graphql/client"
 require "graphql/client/http"
-require 'pry'
-
+class Adapter 
 # Star Wars API example wrapper
 module GitHub
   # Configure GraphQL endpoint using the basic HTTP network adapter.
   HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
     def headers(context)
       # Optionally set any HTTP headers
-      { "Authorization": "token 635cdc5a8b4453d38e96429754ddb8b01d8dc19d" }
+      { "Authorization": "token f6f69c25935b11f4908121670eb9a1fd09c460df" }
     end
   end  
 
@@ -70,12 +69,4 @@ end
 
 p mapped
 
-# data.each_with_object([]) do |value, result|
-#     # data = [node, node, node]
-#     binding.pry
-
-#     value.node.name
-# end
-
-
-# '{ "query": "query { repositoryOwner(login: mostlyfocusedmike) { ... on User { pinnedRepositories(first:6) { edges { node { name } } } } } }" }'
+end
