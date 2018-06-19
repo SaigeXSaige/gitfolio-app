@@ -9,8 +9,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.find_or_create_by(user_params)
+    byebug
     if @user.repositories.length == 0
       git_repos = @user.find_repos
+
       @user.assign_repos(git_repos)
     end
     render json: @user.repositories
@@ -19,6 +21,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :refresh)
+    params.require(:user).permit(:username)
   end
 end
