@@ -1,1 +1,3 @@
- console.log("repo");
+class Repository {
+    
+}
