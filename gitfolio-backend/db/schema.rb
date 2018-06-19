@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2018_06_18_204456) do
   create_table "repositories", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.string "language"
+    t.string "languages"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
