@@ -7,7 +7,7 @@ module GitHub
   HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
     def headers(context)
       # Optionally set any HTTP headers
-      { "Authorization": "token f6f69c25935b11f4908121670eb9a1fd09c460df" }
+      { "Authorization": "token #{ENV["GITHUB_ACCESS_KEY"]}" }
     end
   end  
 
@@ -24,22 +24,22 @@ module GitHub
   Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
 end
 
-username = 'travisdock'
 
-GitNameQuery = GitHub::Client.parse <<-GRAPHQL
-  query {
-        repositoryOwner(login: #{username}) {
-            # login has to be dynamic
-          ... on User {
-            pinnedRepositories(first:6) {
-              edges {
-                node {
-                  name
-                  url
-                  languages(first:10) {
-                    edges {
-                      node {
-                        name
+  GitNameQuery = GitHub::Client.parse <<-'GRAPHQL'
+    query($username: String!) {
+          repositoryOwner(login: $username) {
+              # login has to be dynamic
+            ... on User {
+              pinnedRepositories(first:6) {
+                edges {
+                  node {
+                    name
+                    url
+                    languages(first:10) {
+                      edges {
+                        node {
+                          name
+                        }
                       }
                     }
                   }
@@ -47,26 +47,40 @@ GitNameQuery = GitHub::Client.parse <<-GRAPHQL
               }
             }
           }
-        }
-    }
-    
-GRAPHQL
+      }
 
-puts GitNameQuery
+  GRAPHQL
 
-result = GitHub::Client.query(GitNameQuery)
+  puts GitNameQuery
 
-data = result.data.repository_owner.pinned_repositories.edges
+  username = 'travisdock'
+  result = GitHub::Client.query(GitNameQuery, variables: { username: 'travisdock' })
+  result2 = GitHub::Client.query(GitNameQuery, variables: { username: 'mostlyfocusedmike' })
 
-mapped = data.map do |element| 
-    hash = { name: element.node.name, url: element.node.url}
-    langs = element.node.languages.edges.map do |lang| 
-        lang.node.name
-    end.join(", ")
-    hash[:languages] = langs
-    hash
-end
+  data = result.data.repository_owner.pinned_repositories.edges
 
-p mapped
+  mapped = data.map do |element| 
+      hash = { name: element.node.name, url: element.node.url}
+      langs = element.node.languages.edges.map do |lang| 
+          lang.node.name
+      end.join(", ")
+      hash[:languages] = langs
+      hash
+  end
 
-end
+  p mapped
+
+
+  data = result2.data.repository_owner.pinned_repositories.edges
+
+  mapped = data.map do |element|
+      hash = { name: element.node.name, url: element.node.url}
+      langs = element.node.languages.edges.map do |lang|
+          lang.node.name
+      end.join(", ")
+      hash[:languages] = langs
+      hash
+  end
+
+  p mapped
+  end

@@ -7,7 +7,7 @@ module GitHub
   HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
     def headers(context)
       # Optionally set any HTTP headers
-      { "Authorization": "token f6f69c25935b11f4908121670eb9a1fd09c460df" }
+      { "Authorization": "token ad310c73e375065bd64c5a1f9e928a7780575c19" }
     end
   end  
 
