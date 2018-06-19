@@ -50,8 +50,8 @@ end
 
   GRAPHQL
 
-  def self.find_repos(git_name)
-    result = GitHub::Client.query(GitNameQuery, variables: { username: git_name })
+  def find_repos()
+    result = GitHub::Client.query(GitNameQuery, variables: { username: self.username })
 
     data = result.data.repository_owner.pinned_repositories.edges
 
