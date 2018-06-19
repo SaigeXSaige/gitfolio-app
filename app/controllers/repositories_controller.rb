@@ -1,5 +1,5 @@
-class RepositoryController < ApplicationController
-  protect_from_forgery except: :create
+class RepositoriesController < ApplicationController
+  # protect_from_forgery except: :create
   def index
     @repositories = Repository.all
     # render html: index template

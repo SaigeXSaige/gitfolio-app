@@ -67,6 +67,11 @@ end
     return mapped
   end
 
+  def assign_repos(git_repos)
+    git_repos.map do |repo|
+      self.repositories.create(repo)
+    end 
+  end
 
 
 #ALL OUR OTHER SHIT 

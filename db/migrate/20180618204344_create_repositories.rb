@@ -3,7 +3,7 @@ class CreateRepositories < ActiveRecord::Migration[5.2]
     create_table :repositories do |t|
       t.string :name
       t.string :url
-      t.string :language
+      t.string :languages
       t.integer :user_id
       t.timestamps
     end
