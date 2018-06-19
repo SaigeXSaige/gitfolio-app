@@ -7,6 +7,49 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   </head>
   <body>
+    <header>
+      <h1>GitFolio</h1>
+      
+    </header>
+
+    <div id="username-h" class="holder">
+      <form action="" method="post">
+        <label for="username-input">Username</label>
+        <input type="text" id="username-input"/>
+         <input type="submit" id="username-submit" value="create repos" />
+      </form>
+    </div>
+
+    <div id="users-h" class="holder">
+      <p>Click your username to see your repos</p>
+      <ul id="users">
+        <li id="user-1" >travisdock</li>
+        <li id="user-2" >SaigeXSaige</li>
+        <li id="user-3" >mostlyfocusedmike</li>
+      </ul>
+    </div>
+
+
+    <div id="template-styles-h" class="holder">
+      
+      <div id="template-button-h" class="holder">
+         <div id="template">
+           <p id="html-code">HTML BLOCKS HERE</p>
+         </div>
+         <button type="submit">Refresh Repos</button>
+      </div>
+
+      <div id="styles-h" class="holder">
+        <div id="css-style">
+           <p id="css-code">CSS HERE NOW WOW OH BOY</p>
+          <button type="submit" id="copy-css">Copy CSS</button>
+        </div>
+        <div id="sass-style">
+           <p id="sass-code">SASS HERE NOW WOW OH BOY</p>
+          <button type="submit" id="copy-sass">Copy SASS</button>
+        </div>
+      </div>
+    </div>
     <script src="js/adapter.js" charset="utf-8"></script>
     <script src="js/user.js" charset="utf-8"></script>
     <script src="js/repository.js" charset="utf-8"></script>
