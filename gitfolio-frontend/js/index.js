@@ -47,6 +47,10 @@ document.querySelector("#users").addEventListener("click", (e) => {
   }
 })
 
+function cleanStore(array, element) {
+    return array.filter(e => e.userId !== element);
+}
+
 document.querySelector("#refresh").addEventListener("click", (e) => {
   console.log("refresh!")
   let buttonEl = e.target.dataset.username
@@ -55,8 +59,13 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
   if (buttonEl !== "none") {
     Adapter.createUserAndRepos(username)
       .then(repos => {
+        user = User.findByUsername(username)
+        store.repositories = this.cleanStore(store.repositories, user.id)
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
         Repository.renderTemplateStr(user.repositories(), username) // now we can access them by searching our store
       })
   }
 })
+
+
+

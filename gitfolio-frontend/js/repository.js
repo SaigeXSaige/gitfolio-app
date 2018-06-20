@@ -30,15 +30,12 @@ class Repository {
   //       return repos.map(repo => new Repository(repo, store))
   //     })
   // }
-  static cleanStore(array, element) {
-      return array.filter(e => e.userId !== element);
-  }
+
   static renderTemplateStr(repos, username) {
     let str = '<div class="repos">',
       htmlCodeEl = document.querySelector("#html-code");
     htmlCodeEl.innerText = "";
-    user = User.findByUsername(username)
-    store.repositories = this.cleanStore(store.repositories, user.id)
+
     repos.forEach(repo => {
       str += repo.htmlTemp()
     })
