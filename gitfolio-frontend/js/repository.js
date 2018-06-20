@@ -23,12 +23,13 @@ class Repository {
     `
   }
 
-  static createUserRepos(username) {
-    Adapter.createUserAndRepos(username)
-      .then(repos => {
-        return repos.map(repo => new Repository(repo, store))
-      })
-  }
+
+  // static createUserRepos(username, refresh) {
+  //   Adapter.createUserAndRepos(username)
+  //     .then(repos => {
+  //       return repos.map(repo => new Repository(repo, store))
+  //     })
+  // }
 
   static renderTemplateStr(repos, username) {
     let str = '<div class="repos">',
@@ -41,5 +42,6 @@ class Repository {
     let refresh = document.querySelector("#refresh")
       
     refresh.dataset.username = username
+
   }
 }

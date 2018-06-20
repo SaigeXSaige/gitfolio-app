@@ -18,9 +18,9 @@ class Adapter {
         .then(response => response.json()) // parses response to JSON
     }
 
-      static findUserRepos(name) {
+    static findUserRepos(name) {
         // Default options are marked with *
-     let data = {user: {username: name}, refresh: false}
+      let data = {user: {username: name}, refresh: false}
         return fetch(url, {
             body: JSON.stringify(data), // must match 'Content-Type' header
             headers: {
