@@ -7,10 +7,18 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  def check_repo_errors
+    begin
+      git_repos = @user.find_repos # this is the github fetch
+    rescue 
+      []
+    end   
+  end 
+
   def create
     @user = User.find_or_create_by(user_params)
     if @user.repositories.length == 0
-      git_repos = @user.find_repos
+      git_repos = check_repo_errors # this is the github fetch
       if git_repos.length == 0
         @user.destroy
         render json: []
