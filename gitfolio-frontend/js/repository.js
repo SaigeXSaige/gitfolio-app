@@ -24,7 +24,7 @@ class Repository {
   }
 
   static createUserRepos(username, refresh) {
-    Adapter.createUser(username, refresh)
+    Adapter.createUserAndRepos(username)
       .then(repos => {
         return repos.map(repo => new Repository(repo, store))
       })

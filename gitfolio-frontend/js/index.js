@@ -15,7 +15,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   let inputEl = document.querySelector("#username-input"),
     username = inputEl.value;
 
-  Adapter.createUser(username, true)
+  Adapter.createUserAndRepos(username)
     .then(repos => {
       if (repos.length > 0) {
         let user = new User({"username": username, "id": repos[0].user_id}, store)
@@ -32,7 +32,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
 document.querySelector("#users").addEventListener("click", (e) => {
   if (e.target.className === "user") {
     let username = e.target.textContent
-    Adapter.createUser(username, true)
+    Adapter.findUserRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
         Repository.renderTemplateStr(user.repositories())
