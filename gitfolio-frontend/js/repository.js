@@ -23,20 +23,23 @@ class Repository {
     `
   }
 
-  static createUserRepos(username, refresh) {
+  static createUserRepos(username) {
     Adapter.createUserAndRepos(username)
       .then(repos => {
         return repos.map(repo => new Repository(repo, store))
       })
   }
 
-  static renderTemplateStr(repos) {
+  static renderTemplateStr(repos, username) {
     let str = '<div class="repos">',
       htmlCodeEl = document.querySelector("#html-code")
     repos.forEach(repo => {
       str += repo.htmlTemp()
     })
     str += "</div>"
-      htmlCodeEl.innerText = str
+    htmlCodeEl.innerText = str
+    let refresh = document.querySelector("#refresh")
+      
+    refresh.dataset.username = username
   }
 }

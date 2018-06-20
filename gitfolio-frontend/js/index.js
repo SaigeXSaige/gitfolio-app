@@ -35,8 +35,18 @@ document.querySelector("#users").addEventListener("click", (e) => {
     Adapter.findUserRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
-        Repository.renderTemplateStr(user.repositories())
+        Repository.renderTemplateStr(user.repositories(), username)
       })
   }
 })
 
+document.querySelector("#refresh").addEventListener("click", (e) => {
+  console.log("refresh!")
+  let buttonEl = e.target.dataset.username
+    username = buttonEl,
+    user = User.findByUsername(username);
+  if (buttonEl !== "none") {
+    Repository.createUserRepos(username)
+    Repository.renderTemplateStr(user.repositories(), username)
+  }
+})
