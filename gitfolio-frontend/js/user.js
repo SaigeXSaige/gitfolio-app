@@ -7,6 +7,4 @@ class User {
     this.username = username
     store.users.push(this)
   }
-
-
 }
