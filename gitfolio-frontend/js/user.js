@@ -36,4 +36,8 @@ class User {
     return store.users.find(user => user.username === username)
   }
 
+  repositories() {
+    return store.repositories.filter(repos => repos.userId === this.id)
+  }
+
 }
