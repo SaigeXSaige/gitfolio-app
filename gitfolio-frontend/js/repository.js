@@ -37,6 +37,6 @@ class Repository {
       str += repo.htmlTemp()
     })
     str += "</div>"
-      htmlCodeEl.innerText = str
+    htmlCodeEl.innerText = str
   }
 }

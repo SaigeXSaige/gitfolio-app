@@ -13,16 +13,23 @@ init()
 document.querySelector("form").addEventListener("submit", (e) => {
   console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
-    username = inputEl.value;
+    username = inputEl.value, user;
 
   Adapter.createUserAndRepos(username)
     .then(repos => {
       if (repos.length > 0) {
-        let user = new User({"username": username, "id": repos[0].user_id}, store)
-        if (!User.findByUsername(user.username)) {
+        if (User.findByUsername(username)) {
+          user = User.findByUsername(username)
+        } else {
+          user = new User({"username": username, "id": repos[0].user_id}, store)
           user.renderSelf()
         }
+        // Repository.createUserRepos(user.username, true)
+          // .then(repos => {
+            // console.log(repos);
+        repos.map(repo => new Repository(repo, store))
         Repository.renderTemplateStr(user.repositories())
+          // })
       }
     })
     
