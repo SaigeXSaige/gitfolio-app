@@ -28,7 +28,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
           // .then(repos => {
             // console.log(repos);
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-        Repository.renderTemplateStr(user.repositories()) // now we can access them by searching our store
+        Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
           // })
       }
     })
@@ -53,7 +53,10 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
     username = buttonEl,
     user = User.findByUsername(username);
   if (buttonEl !== "none") {
-    Repository.createUserRepos(username)
-    Repository.renderTemplateStr(user.repositories(), username)
+    Adapter.createUserAndRepos(username)
+      .then(repos => {
+        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+        Repository.renderTemplateStr(user.repositories(), username) // now we can access them by searching our store
+      })
   }
 })

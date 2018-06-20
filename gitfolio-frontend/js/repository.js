@@ -7,7 +7,7 @@ class Repository {
     this.url = url 
     this.languages = languages
     this.userId = user_id
-    if (!store.repositories.find(repo => repo.id === this.id)) {
+    if (!store.repositories.find(repo => repo.url === this.url)) {
       store.repositories.push(this)
     }
   }
@@ -30,10 +30,15 @@ class Repository {
   //       return repos.map(repo => new Repository(repo, store))
   //     })
   // }
-
+  static cleanStore(array, element) {
+      return array.filter(e => e.userId !== element);
+  }
   static renderTemplateStr(repos, username) {
     let str = '<div class="repos">',
-      htmlCodeEl = document.querySelector("#html-code")
+      htmlCodeEl = document.querySelector("#html-code");
+    htmlCodeEl.innerText = "";
+    user = User.findByUsername(username)
+    store.repositories = this.cleanStore(store.repositories, user.id)
     repos.forEach(repo => {
       str += repo.htmlTemp()
     })
