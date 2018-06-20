@@ -11,9 +11,21 @@ class UsersController < ApplicationController
     @user = User.find_or_create_by(user_params)
     if @user.repositories.length == 0
       git_repos = @user.find_repos
+      if git_repos.length == 0
+        @user.destroy
+        render json: []
+      else
+        @user.assign_repos(git_repos)
+        render json: @user.repositories
+      end
+    elsif params[:refresh] == true
+      @user.repositories.destroy_all
+      git_repos = @user.find_repos
       @user.assign_repos(git_repos)
+      render json: @user.repositories
+    else
+      render json: @user.repositories
     end
-    render json: @user.repositories
   end
 
   private
