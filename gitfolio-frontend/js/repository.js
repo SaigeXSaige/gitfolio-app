@@ -33,6 +33,7 @@ class Repository {
 
   static renderTemplateStr(repos, username) {
     let str = '<div class="repos">',
+      htmlCodeInput = document.querySelector("#html-code-hidden"),
       htmlCodeEl = document.querySelector("#html-code");
     htmlCodeEl.innerText = "";
 
@@ -41,6 +42,7 @@ class Repository {
     })
     str += "</div>"
     htmlCodeEl.innerText = str
+    htmlCodeInput.value = str
     let refresh = document.querySelector("#refresh")
       
     refresh.dataset.username = username

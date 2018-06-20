@@ -16,3 +16,8 @@ button {
   overflow: scroll;
   font-family: "Lucida Console", Monaco, monospace;
 }
+
+.hidden {
+  position: absolute;
+  top: -1000000px;
+}

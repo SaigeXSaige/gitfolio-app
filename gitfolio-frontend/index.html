@@ -31,20 +31,24 @@
     <div id="template-styles-h" class="holder">
       
       <div id="template-button-h" class="holder">
+         <button type="submit" id="copy-html" data-username="none" class="copy-button">Copy code </button>
          <div id="template">
            <p id="html-code">HTML BLOCKS HERE</p>
          </div>
+         <input type="text" id="html-code-hidden" class="hidden"/>
          <button type="submit" id="refresh" data-username="none">Refresh Repos</button>
       </div>
 
       <div id="styles-h" class="holder">
         <div id="css-style">
            <p id="css-code">CSS HERE NOW WOW OH BOY</p>
-          <button type="submit" id="copy-css">Copy CSS</button>
+           <input type="text" id="css-code-hidden" class="hidden"/>
+          <button type="submit" id="copy-css" class="copy-button">Copy CSS</button>
         </div>
         <div id="sass-style">
            <p id="sass-code">SASS HERE NOW WOW OH BOY</p>
-          <button type="submit" id="copy-sass">Copy SASS</button>
+           <input type="text" id="sass-code-hidden" class="hidden"/>
+          <button type="submit" id="copy-sass" class="copy-button">Copy SASS</button>
         </div>
       </div>
     </div>
