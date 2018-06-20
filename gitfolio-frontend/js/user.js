@@ -4,7 +4,10 @@ class User {
   constructor({id, username}, store) {
     this.id = id
     this.username = username
-    store.users.push(this)
+    if (!store.users.find(user => user.id === this.id)) {
+      store.users.push(this)
+    }
+
   }
 
   htmlTemp() {
