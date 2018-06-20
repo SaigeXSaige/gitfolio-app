@@ -25,7 +25,15 @@ class User {
         return users.map(user => new User(user, store))
       })
       .then(users => {
-        users.map(user => user.renderSelf())
+        users.map(user => {
+          user.renderSelf()
+          Repository.createUserRepos(user.username, true)
+        })
       })
   }
+
+  static findByUsername(username) {
+    return store.users.find(user => user.username === username)
+  }
+
 }

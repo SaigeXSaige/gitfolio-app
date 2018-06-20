@@ -5,8 +5,9 @@ class Adapter {
             .then(resp => resp.json())
     }
 
-    static createUser(data) {
+    static createUser(name, refresh) {
         // Default options are marked with *
+     let data = {user: {username: name}, refresh: refresh} 
         return fetch(url, {
             body: JSON.stringify(data), // must match 'Content-Type' header
             headers: {
