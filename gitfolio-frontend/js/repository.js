@@ -23,12 +23,12 @@ class Repository {
     `
   }
 
-  static createUserRepos(username, refresh) {
-    Adapter.createUserAndRepos(username)
-      .then(repos => {
-        return repos.map(repo => new Repository(repo, store))
-      })
-  }
+  // static createUserRepos(username, refresh) {
+  //   Adapter.createUserAndRepos(username)
+  //     .then(repos => {
+  //       return repos.map(repo => new Repository(repo, store))
+  //     })
+  // }
 
   static renderTemplateStr(repos) {
     let str = '<div class="repos">',

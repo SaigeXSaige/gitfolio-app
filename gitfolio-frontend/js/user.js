@@ -26,7 +26,11 @@ class User {
       .then(users => {
         users.map(user => {
           user.renderSelf()
-          Repository.createUserRepos(user.username, true)
+          // Repository.createUserRepos(user.username, true)
+          Adapter.createUserAndRepos(user.username)
+            .then(repos => {
+              return repos.map(repo => new Repository(repo, store))
+            })
         })
       })
   }

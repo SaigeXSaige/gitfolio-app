@@ -27,8 +27,8 @@ document.querySelector("form").addEventListener("submit", (e) => {
         // Repository.createUserRepos(user.username, true)
           // .then(repos => {
             // console.log(repos);
-        repos.map(repo => new Repository(repo, store))
-        Repository.renderTemplateStr(user.repositories())
+        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+        Repository.renderTemplateStr(user.repositories()) // now we can access them by searching our store
           // })
       }
     })
