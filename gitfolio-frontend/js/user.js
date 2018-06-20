@@ -9,7 +9,7 @@ class User {
 
   htmlTemp() {
     return `
-      <li>${this.username}</li>
+      <li class="user">${this.username}</li>
     `
   }
 

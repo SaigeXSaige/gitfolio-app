@@ -28,3 +28,15 @@ document.querySelector("form").addEventListener("submit", (e) => {
     
   e.preventDefault()
 })
+
+document.querySelector("#users").addEventListener("click", (e) => {
+  if (e.target.className === "user") {
+    let username = e.target.textContent
+    Adapter.createUser(username, true)
+      .then(repos => {
+        user = User.findByUsername(username)
+        Repository.renderTemplateStr(user.repositories())
+      })
+  }
+})
+
