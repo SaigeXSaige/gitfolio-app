@@ -9,4 +9,8 @@ button {
   display: block;
   margin: 1rem auto; }
 
+#html-code {
+  overflow: scroll;
+  font-family: "Lucida Console", Monaco, monospace; }
+
 /*# sourceMappingURL=style.css.map */
