@@ -16,7 +16,7 @@ class Repository {
     return `
       <div class="repo" id="repo-${this.id}">
         <h1>${this.name}</h1>
-        <a>${this.url}</a>
+        <a href="${this.url}">Go to project</a>
         <p>${this.languages}</p>
       </div>
     `
@@ -27,5 +27,15 @@ class Repository {
       .then(repos => {
         return repos.map(repo => new Repository(repo, store))
       })
+  }
+
+  static renderTemplateStr(repos) {
+    let str = '<div class="repos">',
+      htmlCodeEl = document.querySelector("#html-code")
+    repos.forEach(repo => {
+      str += repo.htmlTemp()
+    })
+    str += "</div>"
+      htmlCodeEl.innerText = str
   }
 }
