@@ -44,16 +44,9 @@ document.querySelector("form").addEventListener("submit", (e) => {
               // console.log(repos);
           //
           repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-          Adapter.getPreview(username).then(obj => {
-            user.preview = obj
-          })
-          .then(resp => {
-            Repository.renderTemplateStr(user.repositories(), user)
-          })
-
-            // })
+          renderTemplateWithPreview(user)
         }
-// <<<<<<< HEAD
+
       })
     inputEl.value = ''
     e.preventDefault()
@@ -63,18 +56,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault()
   }
 
-// =======
-//         // Repository.createUserRepos(user.username, true)
-//           // .then(repos => {
-//             // console.log(repos);
-//         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-//         Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
-//           // })
-//       }
-//     })
-//
-//   e.preventDefault()
-// >>>>>>> origin/link-preview
+
 })
 
 document.querySelector("#users").addEventListener("click", (e) => {
@@ -83,18 +65,22 @@ document.querySelector("#users").addEventListener("click", (e) => {
     Adapter.findUserRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
-        Adapter.getPreview(username).then(obj => {
-          user.preview = obj
-        })
-        .then(resp => {
-          Repository.renderTemplateStr(user.repositories(), user)
-        })
+        renderTemplateWithPreview(user)
       })
   }
 })
 
 function cleanStore(array, element) {
     return array.filter(e => e.userId !== element);
+}
+
+function renderTemplateWithPreview(user) {
+  Adapter.getPreview(user.username).then(obj => {
+    user.preview = obj
+  })
+  .then(resp => {
+    Repository.renderTemplateStr(user.repositories(), user)
+  })
 }
 
 document.querySelector("#refresh").addEventListener("click", (e) => {
