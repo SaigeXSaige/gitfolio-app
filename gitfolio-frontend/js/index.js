@@ -13,27 +13,33 @@ init()
 document.querySelector("form").addEventListener("submit", (e) => {
   console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
-    username = inputEl.value, user;
+    username = inputEl.value.trim(), regex = /^\w*$/, user;
 
-  Adapter.createUserAndRepos(username)
-    .then(repos => {
-      if (repos.length > 0) {
-        if (User.findByUsername(username)) {
-          user = User.findByUsername(username)
-        } else {
-          user = new User({"username": username, "id": repos[0].user_id}, store)
-          user.renderSelf()
+  if (regex.test(username)) {
+    Adapter.createUserAndRepos(username)
+      .then(repos => {
+        if (repos.length > 0) {
+          if (User.findByUsername(username)) {
+            user = User.findByUsername(username)
+          } else {
+            user = new User({"username": username, "id": repos[0].user_id}, store)
+            user.renderSelf()
+          }
+          // Repository.createUserRepos(user.username, true)
+            // .then(repos => {
+              // console.log(repos);
+          repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+          Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
+            // })
         }
-        // Repository.createUserRepos(user.username, true)
-          // .then(repos => {
-            // console.log(repos);
-        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-        Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
-          // })
-      }
-    })
-    
-  e.preventDefault()
+      })
+    inputEl.value = ''
+    e.preventDefault()
+  } else {
+    inputEl.value = ''
+    e.preventDefault()
+  }
+
 })
 
 document.querySelector("#users").addEventListener("click", (e) => {
@@ -66,6 +72,3 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
       })
   }
 })
-
-
-
