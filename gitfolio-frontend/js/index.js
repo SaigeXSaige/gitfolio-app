@@ -63,10 +63,13 @@ document.querySelector("form").addEventListener("submit", (e) => {
   username = inputEl.value.trim().toLowerCase(), regex = /\s/, user;
   
   if (!regex.test(RegExp(username)) &&  username.length !== 0) {
+    const htmlEl = document.querySelector("#html-code")
     
-    document.querySelector("#html-code").innerText = "Loading template..."
+    htmlEl.innerText = "Loading template..."
+    
     Adapter.createUserAndRepos(username)
     .then(repos => {
+      
       if (repos.length > 0) {
         if (User.findByUsername(username)) {
           user = User.findByUsername(username)
@@ -76,7 +79,9 @@ document.querySelector("form").addEventListener("submit", (e) => {
         }
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
         renderTemplateWithPreview(user)
-      }    
+      } else {
+        htmlEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
+      }     
     })
   } else {
     alert("Spaces are not allowed")
