@@ -45,7 +45,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
           //
           repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
           Adapter.getPreview(username).then(obj => {
-            user.img = obj.image
+            user.preview = obj
           })
           .then(resp => {
             Repository.renderTemplateStr(user.repositories(), user)
@@ -84,7 +84,7 @@ document.querySelector("#users").addEventListener("click", (e) => {
       .then(repos => {
         user = User.findByUsername(username)
         Adapter.getPreview(username).then(obj => {
-          user.img = obj.image
+          user.preview = obj
         })
         .then(resp => {
           Repository.renderTemplateStr(user.repositories(), user)
