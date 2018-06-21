@@ -32,6 +32,25 @@ function renderTemplateWithPreview(user) {
   })
 }
 
+function handleClick(e){
+  if (e.target.className === "copy-button") {
+    clipBoard(e)
+  } else if (e.target.id === "refresh") {
+    let buttonEl = e.target.dataset.username
+    username = buttonEl,
+    user = User.findByUsername(username);
+    if (buttonEl !== "none") {
+      Adapter.createUserAndRepos(username)
+      .then(repos => {
+        user = User.findByUsername(username)
+        store.repositories = cleanStore(store.repositories, user.id)
+        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+        Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
+        })
+    } 
+  }
+}
+
 document.querySelector("form").addEventListener("submit", (e) => {
   console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
@@ -76,26 +95,5 @@ document.querySelector("#users").addEventListener("click", (e) => {
   }
 })
 
-document.querySelector("#refresh").addEventListener("click", (e) => {
-  console.log("refresh!")
-  let buttonEl = e.target.dataset.username
-  username = buttonEl,
-  user = User.findByUsername(username);
-  if (buttonEl !== "none") {
-    Adapter.createUserAndRepos(username)
-    .then(repos => {
-      user = User.findByUsername(username)
-      store.repositories = this.cleanStore(store.repositories, user.id)
-      repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-      Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
-      })
-    }
-})
-
-document.querySelector("#template-styles-h").addEventListener("click", (e) => {
-  if (e.target.className === "copy-button") {
-    clipBoard(e)
-  }
-})
-
 document.addEventListener('DOMContentLoaded', init)
+document.querySelector("#template-styles-h").addEventListener("click", handleClick)
