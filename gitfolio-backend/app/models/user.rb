@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-    has_many :repositories
+  validates :username, presence: true, uniqueness: {case_sensitive: false}
+  has_many :repositories
+
 
 module GitHub
   # Configure GraphQL endpoint using the basic HTTP network adapter.
@@ -8,7 +10,7 @@ module GitHub
       # Optionally set any HTTP headers
       { "Authorization": "token #{ENV["GITHUB_ACCESS_KEY"]}" }
     end
-  end  
+  end
 
   # Fetch latest schema on init, this will make a network request
   Schema = GraphQL::Client.load_schema(HTTP)
@@ -55,9 +57,9 @@ end
 
     data = result.data.repository_owner.pinned_repositories.edges
 
-    mapped = data.map do |element| 
+    mapped = data.map do |element|
         hash = { name: element.node.name, url: element.node.url}
-        langs = element.node.languages.edges.map do |lang| 
+        langs = element.node.languages.edges.map do |lang|
             lang.node.name
         end.join(", ")
         hash[:languages] = langs
@@ -70,11 +72,11 @@ end
   def assign_repos(git_repos)
     git_repos.map do |repo|
       self.repositories.create(repo)
-    end 
+    end
   end
 
 
-#ALL OUR OTHER SHIT 
+#ALL OUR OTHER SHIT
 
 
 end
