@@ -10,6 +10,18 @@ function init() {
 
 init()
 
+function clipBoard(e) {
+  let codeText = document.querySelector(`#${e.target.id}-code-hidden`);
+  codeText.select();
+
+  try { //it's good practice to put execCommands in try catch blocks
+    document.execCommand('copy'); 
+  } catch (err) {
+    window.alert('Oops, unable to copy');
+  }
+
+}
+
 document.querySelector("form").addEventListener("submit", (e) => {
   console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
@@ -67,35 +79,13 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
   }
 })
 
-// function clipBoard(e) {
-// //function that copies the value of the hexcode with or without a # infront, or export
-//   var buttonValue =  e.target.id, //each copy button's id corresponds to the id of the # or non-# version of the input
-//     $copyTextarea = $('#color-' + buttonValue), //this creates the id of the hash or non-hash version
-//     $hexValue = $('#color-' + buttonValue.slice(0, 7)).val(), //finds val of color hexcode input
-//     $hashInput = $('#color-' + buttonValue.slice(0, 7) + "-hex"); //gets the hash input element
-//
-//   $hashInput.val("#" + $hexValue); //sets the hash version up in case it needs to be copied
-//   $copyTextarea.select(); //this selects the text inside the one of the fields for copying
-//
-//   try { //it's good practice to put execCommands in try catch blocks
-//     document.execCommand('copy'); //no need to check for malicious code, color.js does
-//   } catch (err) {
-//     window.alert('Oops, unable to copy');
-//   }
-// }
 
-function clipBoard(e) {
-  let codeText = document.querySelector("#html-code-hidden");
-  codeText.select();
-
-  try { //it's good practice to put execCommands in try catch blocks
-    document.execCommand('copy'); //no need to check for malicious code, color.js does
-  } catch (err) {
-    window.alert('Oops, unable to copy');
+document.querySelector("#template-styles-h").addEventListener("click", (e) => {
+  if (e.target.className === "copy-button") {
+    clipBoard(e)
   }
+})
 
-}
 
 
-document.querySelector("#copy-html").addEventListener("click", clipBoard)
 
