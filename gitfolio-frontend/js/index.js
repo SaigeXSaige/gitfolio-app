@@ -1,5 +1,4 @@
- console.log("index");
-store = {
+const store = {
   users: [],
   repositories: []
 }
@@ -8,17 +7,29 @@ function init() {
   User.renderUsers()
 }
 
-
 function clipBoard(e) {
   let codeText = document.querySelector(`#${e.target.id}-code-hidden`);
   codeText.select();
   
   try { //it's good practice to put execCommands in try catch blocks
   document.execCommand('copy');
-} catch (err) {
+  } catch (err) {
     window.alert('Oops, unable to copy');
   }
   
+}
+
+function cleanStore(array, element) {
+  return array.filter(e => e.userId !== element);
+}
+
+function renderTemplateWithPreview(user) {
+  Adapter.getPreview(user.username).then(obj => {
+    user.preview = obj
+  })
+  .then(resp => {
+    Repository.renderTemplateStr(user.repositories(), user)
+  })
 }
 
 document.querySelector("form").addEventListener("submit", (e) => {
@@ -38,10 +49,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
           user = new User({"username": username, "id": repos[0].user_id}, store)
           user.renderSelf()
         }
-        // Repository.createUserRepos(user.username, true)
-        // .then(repos => {
-          // console.log(repos);
-          //
           repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
           renderTemplateWithPreview(user)
         }
@@ -68,19 +75,6 @@ document.querySelector("#users").addEventListener("click", (e) => {
     })
   }
 })
-
-function cleanStore(array, element) {
-  return array.filter(e => e.userId !== element);
-}
-
-function renderTemplateWithPreview(user) {
-  Adapter.getPreview(user.username).then(obj => {
-    user.preview = obj
-  })
-  .then(resp => {
-    Repository.renderTemplateStr(user.repositories(), user)
-  })
-}
 
 document.querySelector("#refresh").addEventListener("click", (e) => {
   console.log("refresh!")
