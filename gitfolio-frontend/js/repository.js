@@ -31,8 +31,9 @@ class Repository {
   //     })
   // }
 
-  static renderTemplateStr(repos, username) {
-    let str = '<div class="repos">',
+  static renderTemplateStr(repos, user) {
+    let str = `<img src="${user.img}" alt="A photo of ${user.username}">
+                <div class="repos">`,
       htmlCodeEl = document.querySelector("#html-code");
     htmlCodeEl.innerText = "";
 
@@ -43,7 +44,7 @@ class Repository {
     htmlCodeEl.innerText = str
     let refresh = document.querySelector("#refresh")
       
-    refresh.dataset.username = username
+    refresh.dataset.username = user.username
 
   }
 }
