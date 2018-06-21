@@ -1,7 +1,7 @@
 const store = {
   users: [],
   repositories: []
-}
+};
 
 function init() {
   User.renderUsers()
@@ -33,8 +33,13 @@ function renderTemplateWithPreview(user) {
 }
 
 function handleClick(e){
-  if (e.target.className === "copy-button") {
-    clipBoard(e)
+  if (e.target.className === "user") {
+    let username = e.target.textContent
+    Adapter.findUserRepos(username)
+    .then(repos => {
+      user = User.findByUsername(username)
+      renderTemplateWithPreview(user)
+    })
   } else if (e.target.id === "refresh") {
     let buttonEl = e.target.dataset.username
     username = buttonEl,
@@ -48,6 +53,8 @@ function handleClick(e){
         Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
         })
     } 
+  } else if (e.target.className === "copy-button") {
+    clipBoard(e)
   }
 }
 
@@ -84,16 +91,5 @@ document.querySelector("form").addEventListener("submit", (e) => {
   
 })
 
-document.querySelector("#users").addEventListener("click", (e) => {
-  if (e.target.className === "user") {
-    let username = e.target.textContent
-    Adapter.findUserRepos(username)
-    .then(repos => {
-      user = User.findByUsername(username)
-      renderTemplateWithPreview(user)
-    })
-  }
-})
-
 document.addEventListener('DOMContentLoaded', init)
-document.querySelector("#template-styles-h").addEventListener("click", handleClick)
+document.addEventListener("click", handleClick)
