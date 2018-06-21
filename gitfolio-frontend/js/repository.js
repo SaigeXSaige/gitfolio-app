@@ -43,7 +43,8 @@ class Repository {
               
               <div class="repos">`,
       htmlCodeEl = document.querySelector("#html-code"),
-      htmlCodeInput = document.querySelector("#html-code-hidden");
+      htmlCodeInput = document.querySelector("#html-code-hidden"),
+      htmlCodePreview = document.querySelector("#preview-code");
     htmlCodeEl.innerText = "";
     let id = 0
     repos.forEach(repo => {
@@ -52,6 +53,7 @@ class Repository {
     str += "</div>"
     htmlCodeEl.innerText = str
     htmlCodeInput.value = str
+    htmlCodePreview.innerHTML = str
     let refresh = document.querySelector("#refresh")
 
       
