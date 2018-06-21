@@ -1,7 +1,21 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
 div {
   border: 2px solid black;
   margin: 1rem;
 }
+
+
+%flexy {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
 
 .holder {
   border: 1px solid red;
@@ -20,4 +34,38 @@ button {
 .hidden {
   position: absolute;
   top: -1000000px;
+}
+
+header {
+  background-image: url("../img/bg.jpg");
+  background-size:cover;
+  margin: 0;
+  height: 20rem;
+  @extend %flexy; 
+  align-items: center;
+  div {
+    margin: 0;
+    background: rgba(0,0,0,.7);
+    border: none;
+    width: 100%;
+    max-width: 25rem;
+    padding: 1rem;
+    font-family: "Futura", "Helvetica", sans-serif;
+    font-weight: 200;
+    color: #FFF;
+    h1 {
+      font-weight: 200;
+      text-align: center;
+      font-size: 4rem;
+      display: block;
+      margin: 0;
+    }
+    p {
+      font-family: helvetica;
+      text-align: center;
+      font-weight: 100;
+      font-size: 1.25rem;
+    }
+
+  }
 }
