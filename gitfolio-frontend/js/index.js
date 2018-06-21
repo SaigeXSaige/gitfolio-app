@@ -28,6 +28,8 @@ document.querySelector("form").addEventListener("submit", (e) => {
     username = inputEl.value.trim(), regex = /\s/, user;
 
   if (!regex.test(RegExp(username)) &&  username.length !== 0) {
+    
+    document.querySelector("#html-code").innerText = "Loading template..."
     Adapter.createUserAndRepos(username)
       .then(repos => {
         if (repos.length > 0) {
