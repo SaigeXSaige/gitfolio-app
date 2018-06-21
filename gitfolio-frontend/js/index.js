@@ -59,9 +59,6 @@ function handleClick(e){
 }
 
 document.querySelector("form").addEventListener("submit", (e) => {
-  e.preventDefault()
-  
-  console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
   username = inputEl.value.trim().toLowerCase(), regex = /\s/, user;
   
@@ -77,16 +74,16 @@ document.querySelector("form").addEventListener("submit", (e) => {
           user = new User({"username": username, "id": repos[0].user_id}, store)
           user.renderSelf()
         }
-          repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-          renderTemplateWithPreview(user)
-        }
-        
-      })
-      inputEl.value = ''
-    } else {
+        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+        renderTemplateWithPreview(user)
+      }    
+    })
+  } else {
     alert("Spaces are not allowed")
-    inputEl.value = ''
   } 
+
+  e.preventDefault()
+  inputEl.value = ''
 })
 
 document.addEventListener('DOMContentLoaded', init)
