@@ -33,8 +33,15 @@ class Repository {
 
 
   static renderTemplateStr(repos, user) {
-    let str = `<img src="${user.img}" alt="A photo of ${user.username}">
-                <div class="repos">`,
+    let str = `<div class="card">
+                <img class="card-img" src="${user.preview.image}" alt="A photo of ${user.username}">
+                <div class="card-body">
+                  <p id="title">${user.preview.title}</p>
+                  <a href="${user.preview.url}">GitHub Profile</a>
+                </div>
+              </div>
+              
+              <div class="repos">`,
       htmlCodeEl = document.querySelector("#html-code"),
       htmlCodeInput = document.querySelector("#html-code-hidden");
     htmlCodeEl.innerText = "";
