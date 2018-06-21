@@ -1,5 +1,13 @@
 const url = "http://localhost:3000/users"
+
+const linkPreviewAPI = "https://api.linkpreview.net/?key=5b2a325bda205eafd3244c6ce9ed78d27d31f04c06ffc&q="
 class Adapter {
+
+    static getPreview(username) {
+        return fetch(linkPreviewAPI + encodeURIComponent(`https://github.com/${username}`))
+            .then(resp => resp.json())
+    }
+
     static getUsers() {
         return fetch(url)
             .then(resp => resp.json())
@@ -30,4 +38,5 @@ class Adapter {
         })
         .then(response => response.json()) // parses response to JSON
     }
+
 }

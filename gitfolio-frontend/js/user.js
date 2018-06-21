@@ -28,6 +28,8 @@ class User {
       })
       .then(users => {
         users.map(user => {
+          // RENDERS TOO SLOW
+          // Adapter.getPreview(user.username).then( obj => user.img = obj.image)
           user.renderSelf()
           // Repository.createUserRepos(user.username, true)
           Adapter.createUserAndRepos(user.username)

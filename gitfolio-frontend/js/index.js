@@ -28,8 +28,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
     username = inputEl.value.trim(), regex = /\s/, user;
 
   if (!regex.test(RegExp(username)) &&  username.length !== 0) {
-    console.log(regex.test(username))
-    console.log(username.length)
     Adapter.createUserAndRepos(username)
       .then(repos => {
         if (repos.length > 0) {
@@ -42,10 +40,18 @@ document.querySelector("form").addEventListener("submit", (e) => {
           // Repository.createUserRepos(user.username, true)
             // .then(repos => {
               // console.log(repos);
+          //
           repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-          Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
+          Adapter.getPreview(username).then(obj => {
+            user.img = obj.image
+          })
+          .then(resp => {
+            Repository.renderTemplateStr(user.repositories(), user)
+          })
+
             // })
         }
+// <<<<<<< HEAD
       })
     inputEl.value = ''
     e.preventDefault()
@@ -55,6 +61,18 @@ document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault()
   }
 
+// =======
+//         // Repository.createUserRepos(user.username, true)
+//           // .then(repos => {
+//             // console.log(repos);
+//         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+//         Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
+//           // })    
+//       }
+//     })
+//     
+//   e.preventDefault()
+// >>>>>>> origin/link-preview
 })
 
 document.querySelector("#users").addEventListener("click", (e) => {
@@ -63,7 +81,12 @@ document.querySelector("#users").addEventListener("click", (e) => {
     Adapter.findUserRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
-        Repository.renderTemplateStr(user.repositories(), username)
+        Adapter.getPreview(username).then(obj => {
+          user.img = obj.image
+        })
+        .then(resp => {
+          Repository.renderTemplateStr(user.repositories(), user)
+        })
       })
   }
 })
@@ -83,7 +106,7 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
         user = User.findByUsername(username)
         store.repositories = this.cleanStore(store.repositories, user.id)
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-        Repository.renderTemplateStr(user.repositories(), username) // now we can access them by searching our store
+        Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
       })
   }
 })
@@ -93,4 +116,5 @@ document.querySelector("#template-styles-h").addEventListener("click", (e) => {
     clipBoard(e)
   }
 })
+
 

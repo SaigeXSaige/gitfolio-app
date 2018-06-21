@@ -31,21 +31,24 @@ class Repository {
   //     })
   // }
 
-  static renderTemplateStr(repos, username) {
-    let str = '<div class="repos">',
-      htmlCodeInput = document.querySelector("#html-code-hidden"),
-      htmlCodeEl = document.querySelector("#html-code");
+
+  static renderTemplateStr(repos, user) {
+    let str = `<img src="${user.img}" alt="A photo of ${user.username}">
+                <div class="repos">`,
+      htmlCodeEl = document.querySelector("#html-code"),
+      htmlCodeInput = document.querySelector("#html-code-hidden");
     htmlCodeEl.innerText = "";
     let id = 0
     repos.forEach(repo => {
-      str += repo.htmlTemp(id++)
+      str += repo.htmlTemp(++id)
     })
     str += "</div>"
     htmlCodeEl.innerText = str
     htmlCodeInput.value = str
     let refresh = document.querySelector("#refresh")
 
-    refresh.dataset.username = username
+      
+    refresh.dataset.username = user.username
 
   }
 }
