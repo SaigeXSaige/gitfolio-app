@@ -10,10 +10,10 @@ class UsersController < ApplicationController
   def check_repo_errors
     begin
       git_repos = @user.find_repos # this is the github fetch
-    rescue 
+    rescue
       []
-    end   
-  end 
+    end
+  end
 
   def create
     @user = User.find_or_create_by(user_params)
