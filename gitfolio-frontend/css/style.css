@@ -1,3 +1,7 @@
+body.waiting * {
+  cursor: progress;
+}
+
 div {
   border: 2px solid black;
   margin: 1rem; }

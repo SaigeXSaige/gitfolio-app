@@ -42,8 +42,14 @@ document.querySelector("#users").addEventListener("click", (e) => {
     Adapter.findUserRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
-        Adapter.getPreview(username).then(obj => user.img = obj.image)
-        .then(resp => Repository.renderTemplateStr(user.repositories(), user))
+        Adapter.getPreview(username).then(obj => {
+          document.body.classList.add('waiting')
+          user.img = obj.image
+        })
+        .then(resp => {
+          Repository.renderTemplateStr(user.repositories(), user)
+          document.body.classList.remove('waiting')
+        })
       })
   }
 })
@@ -63,7 +69,7 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
         user = User.findByUsername(username)
         store.repositories = this.cleanStore(store.repositories, user.id)
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-        Repository.renderTemplateStr(user.repositories(), username) // now we can access them by searching our store
+        Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
       })
   }
 })
