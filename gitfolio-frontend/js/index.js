@@ -51,7 +51,7 @@ function handleClick(e){
         store.repositories = cleanStore(store.repositories, user.id)
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
         Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
-        })
+      })
     } 
   } else if (e.target.className === "copy-button") {
     clipBoard(e)
@@ -59,6 +59,8 @@ function handleClick(e){
 }
 
 document.querySelector("form").addEventListener("submit", (e) => {
+  e.preventDefault()
+  
   console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
   username = inputEl.value.trim().toLowerCase(), regex = /\s/, user;
@@ -81,14 +83,10 @@ document.querySelector("form").addEventListener("submit", (e) => {
         
       })
       inputEl.value = ''
-      e.preventDefault()
     } else {
     alert("Spaces are not allowed")
     inputEl.value = ''
-    e.preventDefault()
-  }
-  
-  
+  } 
 })
 
 document.addEventListener('DOMContentLoaded', init)
