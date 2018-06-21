@@ -29,7 +29,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             // console.log(repos);
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
         Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
-          // })
+          // })    
       }
     })
     
@@ -42,7 +42,8 @@ document.querySelector("#users").addEventListener("click", (e) => {
     Adapter.findUserRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
-        Repository.renderTemplateStr(user.repositories(), username)
+        Adapter.getPreview(username).then(obj => user.img = obj.image)
+        .then(resp => Repository.renderTemplateStr(user.repositories(), user))
       })
   }
 })
@@ -66,6 +67,5 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
       })
   }
 })
-
 
 
