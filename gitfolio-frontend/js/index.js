@@ -15,7 +15,7 @@ function clipBoard(e) {
   codeText.select();
 
   try { //it's good practice to put execCommands in try catch blocks
-    document.execCommand('copy'); 
+    document.execCommand('copy');
   } catch (err) {
     window.alert('Oops, unable to copy');
   }
@@ -25,10 +25,10 @@ function clipBoard(e) {
 document.querySelector("form").addEventListener("submit", (e) => {
   console.log("submit!")
   let inputEl = document.querySelector("#username-input"),
-    username = inputEl.value.trim(), regex = /\s/, user;
+    username = inputEl.value.trim().toLowerCase(), regex = /\s/, user;
 
   if (!regex.test(RegExp(username)) &&  username.length !== 0) {
-    
+
     document.querySelector("#html-code").innerText = "Loading template..."
     Adapter.createUserAndRepos(username)
       .then(repos => {
@@ -69,10 +69,10 @@ document.querySelector("form").addEventListener("submit", (e) => {
 //             // console.log(repos);
 //         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
 //         Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
-//           // })    
+//           // })
 //       }
 //     })
-//     
+//
 //   e.preventDefault()
 // >>>>>>> origin/link-preview
 })
@@ -118,5 +118,3 @@ document.querySelector("#template-styles-h").addEventListener("click", (e) => {
     clipBoard(e)
   }
 })
-
-
