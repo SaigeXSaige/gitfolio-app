@@ -1,122 +1,95 @@
- console.log("index");
-store = {
+const store = {
   users: [],
   repositories: []
-}
+};
 
 function init() {
   User.renderUsers()
 }
 
-init()
-
 function clipBoard(e) {
   let codeText = document.querySelector(`#${e.target.id}-code-hidden`);
   codeText.select();
-
+  
   try { //it's good practice to put execCommands in try catch blocks
-    document.execCommand('copy'); 
+  document.execCommand('copy');
   } catch (err) {
     window.alert('Oops, unable to copy');
   }
-
+  
 }
 
-document.querySelector("form").addEventListener("submit", (e) => {
-  console.log("submit!")
-  let inputEl = document.querySelector("#username-input"),
-    username = inputEl.value.trim(), regex = /\s/, user;
+function cleanStore(array, element) {
+  return array.filter(e => e.userId !== element);
+}
 
-  if (!regex.test(RegExp(username)) &&  username.length !== 0) {
-    
-    document.querySelector("#html-code").innerText = "Loading template..."
-    Adapter.createUserAndRepos(username)
-      .then(repos => {
-        if (repos.length > 0) {
-          if (User.findByUsername(username)) {
-            user = User.findByUsername(username)
-          } else {
-            user = new User({"username": username, "id": repos[0].user_id}, store)
-            user.renderSelf()
-          }
-          // Repository.createUserRepos(user.username, true)
-            // .then(repos => {
-              // console.log(repos);
-          //
-          repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-          Adapter.getPreview(username).then(obj => {
-            user.img = obj.image
-          })
-          .then(resp => {
-            Repository.renderTemplateStr(user.repositories(), user)
-          })
+function renderTemplateWithPreview(user) {
+  Adapter.getPreview(user.username).then(obj => {
+    user.preview = obj
+  })
+  .then(resp => {
+    Repository.renderTemplateStr(user.repositories(), user)
+  })
+}
 
-            // })
-        }
-// <<<<<<< HEAD
-      })
-    inputEl.value = ''
-    e.preventDefault()
-  } else {
-    alert("Spaces are not allowed")
-    inputEl.value = ''
-    e.preventDefault()
-  }
-
-// =======
-//         // Repository.createUserRepos(user.username, true)
-//           // .then(repos => {
-//             // console.log(repos);
-//         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-//         Repository.renderTemplateStr(user.repositories(),user.username) // now we can access them by searching our store
-//           // })    
-//       }
-//     })
-//     
-//   e.preventDefault()
-// >>>>>>> origin/link-preview
-})
-
-document.querySelector("#users").addEventListener("click", (e) => {
+function handleClick(e){
   if (e.target.className === "user") {
     let username = e.target.textContent
     Adapter.findUserRepos(username)
-      .then(repos => {
-        user = User.findByUsername(username)
-        Adapter.getPreview(username).then(obj => {
-          user.img = obj.image
-        })
-        .then(resp => {
-          Repository.renderTemplateStr(user.repositories(), user)
-        })
-      })
-  }
-})
-
-function cleanStore(array, element) {
-    return array.filter(e => e.userId !== element);
-}
-
-document.querySelector("#refresh").addEventListener("click", (e) => {
-  console.log("refresh!")
-  let buttonEl = e.target.dataset.username
+    .then(repos => {
+      user = User.findByUsername(username)
+      renderTemplateWithPreview(user)
+    })
+  } else if (e.target.id === "refresh") {
+    let buttonEl = e.target.dataset.username
     username = buttonEl,
     user = User.findByUsername(username);
-  if (buttonEl !== "none") {
-    Adapter.createUserAndRepos(username)
+    if (buttonEl !== "none") {
+      Adapter.createUserAndRepos(username)
       .then(repos => {
         user = User.findByUsername(username)
-        store.repositories = this.cleanStore(store.repositories, user.id)
+        store.repositories = cleanStore(store.repositories, user.id)
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
         Repository.renderTemplateStr(user.repositories(), user) // now we can access them by searching our store
       })
-  }
-})
-
-document.querySelector("#template-styles-h").addEventListener("click", (e) => {
-  if (e.target.className === "copy-button") {
+    } 
+  } else if (e.target.className === "copy-button") {
     clipBoard(e)
   }
+}
+
+document.querySelector("form").addEventListener("submit", (e) => {
+  let inputEl = document.querySelector("#username-input"),
+  username = inputEl.value.trim().toLowerCase(), regex = /\s/, user;
+  
+  if (!regex.test(RegExp(username)) &&  username.length !== 0) {
+    const htmlEl = document.querySelector("#html-code")
+    
+    htmlEl.innerText = "Loading template..."
+    
+    Adapter.createUserAndRepos(username)
+    .then(repos => {
+      
+      if (repos.length > 0) {
+        if (User.findByUsername(username)) {
+          user = User.findByUsername(username)
+        } else {
+          user = new User({"username": username, "id": repos[0].user_id}, store)
+          user.renderSelf()
+        }
+        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+        renderTemplateWithPreview(user)
+      } else {
+        htmlEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
+      }     
+    })
+  } else {
+    alert("Spaces are not allowed")
+  } 
+
+  e.preventDefault()
+  inputEl.value = ''
 })
 
-
+document.addEventListener('DOMContentLoaded', init)
+document.addEventListener("click", handleClick)
