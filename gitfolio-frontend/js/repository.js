@@ -18,28 +18,19 @@ class Repository {
       <div class="card repo" id="repo-${id}">
         <div class="card-body">
           <h3 class="repo-name">${this.name}</h3>
-          <a class="repo-link" href="${this.url}">Go to project</a>
+          <a class="repo-link" href="${this.url}" target="_blank">Go to project</a>
           <p class="repo-link" >${this.languages}</p>
         </div>
       </div>
     `
   }
 
-
-  // static createUserRepos(username, refresh) {
-  //   Adapter.createUserAndRepos(username)
-  //     .then(repos => {
-  //       return repos.map(repo => new Repository(repo, store))
-  //     })
-  // }
-
-
   static renderTemplateStr(repos, user) {
     let str = `<div class="card">
                 <img class="card-img" src="${user.preview.image}" alt="A photo of ${user.username}">
                 <div class="card-body">
                   <p id="github-name">${user.preview.title}</p>
-                  <a id="github-profile" href="${user.preview.url}">GitHub Profile</a>
+                  <a id="github-profile" href="${user.preview.url}" target="_blank">GitHub Profile</a>
                 </div>
               </div>
               
