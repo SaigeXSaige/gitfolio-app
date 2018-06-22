@@ -163,4 +163,19 @@ footer {
     width: 80%;
     margin: 1rem auto; }
 
+li:hover {
+  transform: scale(1, 1.05);
+  outline: none;
+  color: #0087ff;
+  text-shadow: 0 0 4px #0087ff;
+  cursor: pointer;
+
+}
+li:active {
+  transform: scale(1, 1.08);
+  outline: none;
+  color: #275db5;
+  text-shadow: 0 0 5px #275db5;
+}
+
 /*# sourceMappingURL=style.css.map */

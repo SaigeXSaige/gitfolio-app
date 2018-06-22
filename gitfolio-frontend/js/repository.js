@@ -33,7 +33,7 @@ class Repository {
                   <a id="github-profile" href="${user.preview.url}" target="_blank">GitHub Profile</a>
                 </div>
               </div>
-              
+
               <div class="repos">`,
       htmlCodeEl = document.querySelector("#html-code"),
       htmlCodeInput = document.querySelector("#html-code-hidden"),
@@ -49,7 +49,7 @@ class Repository {
     htmlCodePreview.innerHTML = str
     let refresh = document.querySelector("#refresh")
 
-      
+
     refresh.dataset.username = user.username
 
   }
