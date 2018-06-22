@@ -64,7 +64,7 @@ header {
 
 .main-holder {
   margin: 2rem auto;
-  padding: 1rem 0;
+  padding: 1rem;
   font-size: 1.25rem;
   background: rgba(0, 0, 0, 0.5);
   width: 100%;
@@ -133,7 +133,7 @@ form {
   top: -1000000px; }
 
 #preview-h #preview-heading {
-  text-align: center; }
+  text-align: center;}
 #preview-h #preview-text {
   text-align: center;
   width: 80%;
