@@ -92,7 +92,7 @@ form {
     padding-left: .5rem;
     margin: 1rem auto;
     height: 8rem;
-    overflow: scroll; }
+    overflow-y: scroll; }
 
 #template-styles-h {
   width: 100%;
@@ -111,10 +111,13 @@ form {
   width: 100%;
   height: 10rem;
   margin-top: .5rem;
-  overflow: scroll;
+  overflow-y: scroll;
   font-family: monospace; }
   .code-template p {
     margin: 1rem .5rem; }
+.styling {
+  overflow-x: hidden;
+}
 
 .code-holder {
   position: relative;
