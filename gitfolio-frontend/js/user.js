@@ -19,6 +19,7 @@ class User {
   renderSelf() {
     let usersEl = document.querySelector("#users")
     usersEl.innerHTML += this.htmlTemp()
+    return this
   }
 
   static renderUsers() {

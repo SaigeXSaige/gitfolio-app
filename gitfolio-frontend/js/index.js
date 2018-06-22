@@ -84,6 +84,14 @@ function renderTemplateWithPreview(user) {
   })
 }
 
+function findOrCreateUser(username, repos) {
+  if (User.findByUsername(username)) {
+    return User.findByUsername(username)
+  } else {
+    return new User({"username": username, "id": repos[0].user_id}, store).renderSelf()
+  }
+}
+
 function handleClick(e){
   if (e.target.className === "user") {
     let username = e.target.textContent
@@ -122,20 +130,15 @@ document.querySelector("form").addEventListener("submit", (e) => {
     
     Adapter.createUserAndRepos(username)
     .then(repos => {
-      
       if (repos.length > 0) {
-        if (User.findByUsername(username)) {
-          user = User.findByUsername(username)
-        } else {
-          user = new User({"username": username, "id": repos[0].user_id}, store)
-          user.renderSelf()
-        }
+        user = findOrCreateUser(username, repos)
         repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
         renderTemplateWithPreview(user)
       } else {
         htmlEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
         previewEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
       }     
+    
     })
   } else {
     alert("Spaces are not allowed")
