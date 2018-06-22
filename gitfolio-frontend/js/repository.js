@@ -17,7 +17,7 @@ class Repository {
     return `
       <div class="card repo" id="repo-${id}">
         <div class="card-body">
-          <h1 class="repo-name">${this.name}</h1>
+          <h3 class="repo-name">${this.name}</h3>
           <a class="repo-link" href="${this.url}">Go to project</a>
           <p class="repo-link" >${this.languages}</p>
         </div>
