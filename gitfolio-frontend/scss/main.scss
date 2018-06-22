@@ -166,14 +166,62 @@ form {
   }
 }
 
-// #html-code {
-//   overflow: scroll;
-//   font-family: "Lucida Console", Monaco, monospace;
-// }
-
 .hidden {
   position: absolute;
   top: -1000000px;
 }
 
+#preview-h {
+  #preview-heading {
+    text-align: center;
+  }
+  #preview-text{
+    text-align: center;
+    width: 80%;
+    margin: 1rem auto;
+    font-style: italic;
+  }
+}
 
+
+#preview-code {
+  .card {
+    background: white;
+    color: black;
+    margin: 1rem auto;
+    display: flex;
+    img {
+      height: 10rem;
+      background: black;
+      display: block;
+    }
+    .card-body {
+      margin: 1rem;
+      #github-name {
+      }
+      #github-title {
+      }
+      .repo-name {
+      }
+      .repo-link {
+      }
+      .repo-langs {
+      }
+    }
+
+  }
+}
+
+footer {
+  margin: 3rem 0 0;
+  padding: 1rem 0;
+  background: black;
+  @extend %font;
+  color: gray;
+  text-align: center;
+  font-size: .8rem;
+  p {
+    width: 80%;
+    margin: 1rem auto;
+  }
+}

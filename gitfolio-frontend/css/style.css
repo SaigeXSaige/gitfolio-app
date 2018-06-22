@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   justify-content: center; }
 
-header, .main-holder {
+header, .main-holder, footer {
   font-family: "Poppins", "Helvetica", sans-serif; }
 
 input[type="submit"], button, form #username-submit {
@@ -131,5 +131,36 @@ form {
 .hidden {
   position: absolute;
   top: -1000000px; }
+
+#preview-h #preview-heading {
+  text-align: center; }
+#preview-h #preview-text {
+  text-align: center;
+  width: 80%;
+  margin: 1rem auto;
+  font-style: italic; }
+
+#preview-code .card {
+  background: white;
+  color: black;
+  margin: 1rem auto;
+  display: flex; }
+  #preview-code .card img {
+    height: 10rem;
+    background: black;
+    display: block; }
+  #preview-code .card .card-body {
+    margin: 1rem; }
+
+footer {
+  margin: 3rem 0 0;
+  padding: 1rem 0;
+  background: black;
+  color: gray;
+  text-align: center;
+  font-size: .8rem; }
+  footer p {
+    width: 80%;
+    margin: 1rem auto; }
 
 /*# sourceMappingURL=style.css.map */

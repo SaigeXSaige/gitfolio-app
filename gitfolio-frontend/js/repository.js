@@ -15,10 +15,12 @@ class Repository {
     // TODO Make this id always start at one for user
   htmlTemp(id) {
     return `
-      <div class="repo" id="repo-${id}">
-        <h1>${this.name}</h1>
-        <a href="${this.url}">Go to project</a>
-        <p>${this.languages}</p>
+      <div class="card repo" id="repo-${id}">
+        <div class="card-body">
+          <h1 class="repo-name">${this.name}</h1>
+          <a class="repo-link" href="${this.url}">Go to project</a>
+          <p class="repo-link" >${this.languages}</p>
+        </div>
       </div>
     `
   }
@@ -36,8 +38,8 @@ class Repository {
     let str = `<div class="card">
                 <img class="card-img" src="${user.preview.image}" alt="A photo of ${user.username}">
                 <div class="card-body">
-                  <p id="title">${user.preview.title}</p>
-                  <a href="${user.preview.url}">GitHub Profile</a>
+                  <p id="github-name">${user.preview.title}</p>
+                  <a id="github-profile" href="${user.preview.url}">GitHub Profile</a>
                 </div>
               </div>
               

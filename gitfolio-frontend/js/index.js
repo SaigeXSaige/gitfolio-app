@@ -5,6 +5,7 @@ const store = {
 
 function init() {
   User.renderUsers()
+  renderStyles()
 }
 
 function clipBoard(e) {
@@ -17,6 +18,57 @@ function clipBoard(e) {
     window.alert('Oops, unable to copy');
   }
   
+}
+
+function renderStyles() {
+  document.querySelector("#css-code").innerText = `.card {
+                background: white;
+                color: black;
+                margin: 1rem auto;
+                display: flex;
+                }
+                .card-img {
+                  height: 10rem;
+                  background: black;
+                  display: block;
+                }
+                .card-body {
+                  margin: 1rem;
+                }
+                #github-name {
+                }
+                #github-title {
+                }
+                .repo-name {
+                }
+                .repo-link {
+                }
+                .repo-langs {
+                }`
+    document.querySelector("#sass-code").innerText = `.card {
+                background: white;
+                color: black;
+                margin: 1rem auto;
+                display: flex;
+                .card-img {
+                  height: 10rem;
+                  background: black;
+                  display: block;
+                }
+                .card-body {
+                  margin: 1rem;
+                  #github-name {
+                  }
+                  #github-title {
+                  }
+                  .repo-name {
+                  }
+                  .repo-link {
+                  }
+                  .repo-langs {
+                  }
+                }
+              }`
 }
 
 function cleanStore(array, element) {
@@ -64,6 +116,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   
   if (!regex.test(RegExp(username)) &&  username.length !== 0) {
     const htmlEl = document.querySelector("#html-code")
+    const previewEl = document.querySelector("#preview-code")
     
     htmlEl.innerText = "Loading template..."
     
@@ -81,6 +134,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
         renderTemplateWithPreview(user)
       } else {
         htmlEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
+        previewEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
       }     
     })
   } else {
