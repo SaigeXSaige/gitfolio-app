@@ -92,6 +92,20 @@ function findOrCreateUser(username, repos) {
   }
 }
 
+function checkThenRender(repos, username) {
+  const previewEl = document.querySelector("#preview-code");
+  let user;
+
+  if (repos.length > 0) {
+    user = findOrCreateUser(username, repos)
+    repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
+    renderTemplateWithPreview(user)
+  } else {
+    htmlEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
+    previewEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
+  }   
+}
+
 function handleClick(e){
   if (e.target.className === "user") {
     let username = e.target.textContent
@@ -118,35 +132,24 @@ function handleClick(e){
   }
 }
 
-document.querySelector("form").addEventListener("submit", (e) => {
+function handleSubmit(e){
   let inputEl = document.querySelector("#username-input"),
-  username = inputEl.value.trim().toLowerCase(), regex = /\s/, user;
+  username = inputEl.value.trim().toLowerCase(), regex = /\s/;
   
   if (!regex.test(RegExp(username)) &&  username.length !== 0) {
     const htmlEl = document.querySelector("#html-code")
-    const previewEl = document.querySelector("#preview-code")
-    
     htmlEl.innerText = "Loading template..."
     
     Adapter.createUserAndRepos(username)
-    .then(repos => {
-      if (repos.length > 0) {
-        user = findOrCreateUser(username, repos)
-        repos.map(repo => new Repository(repo, store)) // make the repos from DB into memory repos
-        renderTemplateWithPreview(user)
-      } else {
-        htmlEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
-        previewEl.innerText = "INVALID INPUT. CHECK PINNED REPOSITORIES OR GITHUB USERNAME."
-      }     
-    
-    })
+      .then(repos => { checkThenRender(repos, username)})
   } else {
-    alert("Spaces are not allowed")
+      alert("Spaces are not allowed")
   } 
-
+  
   e.preventDefault()
   inputEl.value = ''
-})
+}
 
 document.addEventListener('DOMContentLoaded', init)
+document.addEventListener("submit", handleSubmit)
 document.addEventListener("click", handleClick)
